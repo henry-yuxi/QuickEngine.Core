@@ -140,7 +140,7 @@
             return num;
         }
 
-        public static TSource FirstEx<TSource>(this IEnumerable<TSource> source)
+        public static TSource FirstOrDefaultEx<TSource>(this IEnumerable<TSource> source)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
@@ -164,10 +164,10 @@
                     iter.Dispose();
                 }
             }
-            throw new InvalidOperationException("NoElements");
+            return default(TSource);
         }
 
-        public static TSource FirstEx<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static TSource FirstOrDefaultEx<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
@@ -257,7 +257,6 @@
             }
             return local;
         }
-
 
         public static IEnumerable<TResult> SelectEx<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, int, TResult> selector)
         {
