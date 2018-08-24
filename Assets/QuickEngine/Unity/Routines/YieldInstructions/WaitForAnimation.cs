@@ -1,22 +1,25 @@
-﻿using UnityEngine;
-
-public class WaitForAnimation : CustomYieldInstruction
+﻿namespace QuickEngine.Unity
 {
-    private Animation animation;
+    using UnityEngine;
 
-    public WaitForAnimation(Animation animation)
+    public class WaitForAnimation : CustomYieldInstruction
     {
-        this.animation = animation;
-    }
+        private Animation animation;
 
-    public override bool keepWaiting
-    {
-        get
+        public WaitForAnimation(Animation animation)
         {
-            if (animation == null)
-                return false;
+            this.animation = animation;
+        }
 
-            return animation.isPlaying;
+        public override bool keepWaiting
+        {
+            get
+            {
+                if (animation == null)
+                    return false;
+
+                return animation.isPlaying;
+            }
         }
     }
 }

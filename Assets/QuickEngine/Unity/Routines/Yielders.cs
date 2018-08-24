@@ -1,56 +1,59 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-public static class Yielders
+﻿namespace QuickEngine.Unity
 {
-    public static bool Enabled = true;
+    using System.Collections.Generic;
+    using UnityEngine;
 
-    public static int mInternalCounter = 0; // counts how many times the app yields
-
-    private static WaitForEndOfFrame mWaitForEndOfFrame = new WaitForEndOfFrame();
-
-    public static WaitForEndOfFrame EndOfFrame
+    public static class Yielders
     {
-        get { mInternalCounter++; return Enabled ? mWaitForEndOfFrame : new WaitForEndOfFrame(); }
-    }
+        public static bool Enabled = true;
 
-    private static WaitForFixedUpdate mWaitForFixedUpdate = new WaitForFixedUpdate();
+        public static int mInternalCounter = 0; // counts how many times the app yields
 
-    public static WaitForFixedUpdate FixedUpdate
-    {
-        get { mInternalCounter++; return Enabled ? mWaitForFixedUpdate : new WaitForFixedUpdate(); }
-    }
+        private static WaitForEndOfFrame mWaitForEndOfFrame = new WaitForEndOfFrame();
 
-    public static WaitForSeconds GetWaitForSeconds(float seconds)
-    {
-        mInternalCounter++;
-
-        if (!Enabled)
-            return new WaitForSeconds(seconds);
-
-        WaitForSeconds wfs;
-        if (!mWaitForSecondsYielders.TryGetValue(seconds, out wfs))
-            mWaitForSecondsYielders.Add(seconds, wfs = new WaitForSeconds(seconds));
-        return wfs;
-    }
-
-    public static void ClearWaitForSeconds()
-    {
-        mWaitForSecondsYielders.Clear();
-    }
-
-    private static Dictionary<float, WaitForSeconds> mWaitForSecondsYielders = new Dictionary<float, WaitForSeconds>(100, new FloatComparer());
-
-    private class FloatComparer : IEqualityComparer<float>
-    {
-        public bool Equals(float x, float y)
+        public static WaitForEndOfFrame EndOfFrame
         {
-            return x == y;
+            get { mInternalCounter++; return Enabled ? mWaitForEndOfFrame : new WaitForEndOfFrame(); }
         }
 
-        public int GetHashCode(float obj)
+        private static WaitForFixedUpdate mWaitForFixedUpdate = new WaitForFixedUpdate();
+
+        public static WaitForFixedUpdate FixedUpdate
         {
-            return (int)obj;
+            get { mInternalCounter++; return Enabled ? mWaitForFixedUpdate : new WaitForFixedUpdate(); }
+        }
+
+        public static WaitForSeconds GetWaitForSeconds(float seconds)
+        {
+            mInternalCounter++;
+
+            if (!Enabled)
+                return new WaitForSeconds(seconds);
+
+            WaitForSeconds wfs;
+            if (!mWaitForSecondsYielders.TryGetValue(seconds, out wfs))
+                mWaitForSecondsYielders.Add(seconds, wfs = new WaitForSeconds(seconds));
+            return wfs;
+        }
+
+        public static void ClearWaitForSeconds()
+        {
+            mWaitForSecondsYielders.Clear();
+        }
+
+        private static Dictionary<float, WaitForSeconds> mWaitForSecondsYielders = new Dictionary<float, WaitForSeconds>(100, new FloatComparer());
+
+        private class FloatComparer : IEqualityComparer<float>
+        {
+            public bool Equals(float x, float y)
+            {
+                return x == y;
+            }
+
+            public int GetHashCode(float obj)
+            {
+                return (int)obj;
+            }
         }
     }
 }

@@ -1,28 +1,31 @@
-﻿using UnityEngine;
-
-public class WaitForKeyDown : CustomYieldInstruction
+﻿namespace QuickEngine.Unity
 {
-    private bool useName;
-    private string name;
-    private KeyCode key;
+    using UnityEngine;
 
-    public WaitForKeyDown(string name)
+    public class WaitForKeyDown : CustomYieldInstruction
     {
-        this.name = name;
-        useName = true;
-    }
+        private bool useName;
+        private string name;
+        private KeyCode key;
 
-    public WaitForKeyDown(KeyCode key)
-    {
-        this.key = key;
-        useName = false;
-    }
-
-    public override bool keepWaiting
-    {
-        get
+        public WaitForKeyDown(string name)
         {
-            return !(useName ? Input.GetKeyDown(name) : Input.GetKeyDown(key));
+            this.name = name;
+            useName = true;
+        }
+
+        public WaitForKeyDown(KeyCode key)
+        {
+            this.key = key;
+            useName = false;
+        }
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                return !(useName ? Input.GetKeyDown(name) : Input.GetKeyDown(key));
+            }
         }
     }
 }

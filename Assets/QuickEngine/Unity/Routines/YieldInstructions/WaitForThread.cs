@@ -1,20 +1,23 @@
-﻿using System.Threading;
-using UnityEngine;
-
-public class WaitForThread : CustomYieldInstruction
+﻿namespace QuickEngine.Unity
 {
-    private Thread thread;
+    using System.Threading;
+    using UnityEngine;
 
-    public WaitForThread(Thread thread)
+    public class WaitForThread : CustomYieldInstruction
     {
-        this.thread = thread;
-    }
+        private Thread thread;
 
-    public override bool keepWaiting
-    {
-        get
+        public WaitForThread(Thread thread)
         {
-            return thread.IsAlive;
+            this.thread = thread;
+        }
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                return thread.IsAlive;
+            }
         }
     }
 }

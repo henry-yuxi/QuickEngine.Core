@@ -1,22 +1,25 @@
-﻿using UnityEngine;
-
-public class WaitForAudioSource : CustomYieldInstruction
+﻿namespace QuickEngine.Unity
 {
-    private AudioSource audioSource;
+    using UnityEngine;
 
-    public WaitForAudioSource(AudioSource audioSource)
+    public class WaitForAudioSource : CustomYieldInstruction
     {
-        this.audioSource = audioSource;
-    }
+        private AudioSource audioSource;
 
-    public override bool keepWaiting
-    {
-        get
+        public WaitForAudioSource(AudioSource audioSource)
         {
-            if (audioSource == null)
-                return false;
+            this.audioSource = audioSource;
+        }
 
-            return audioSource.isPlaying;
+        public override bool keepWaiting
+        {
+            get
+            {
+                if (audioSource == null)
+                    return false;
+
+                return audioSource.isPlaying;
+            }
         }
     }
 }

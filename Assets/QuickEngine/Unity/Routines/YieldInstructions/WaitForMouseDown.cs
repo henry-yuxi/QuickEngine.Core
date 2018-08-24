@@ -1,20 +1,22 @@
-﻿using UnityEngine;
-
-public class WaitForMouseDown : CustomYieldInstruction
+﻿namespace QuickEngine.Unity
 {
-    private int button;
+    using UnityEngine;
 
-    public WaitForMouseDown(int button)
+    public class WaitForMouseDown : CustomYieldInstruction
     {
-        this.button = button;
-    }
+        private int button;
 
-    public override bool keepWaiting
-    {
-        get
+        public WaitForMouseDown(int button)
         {
-            return !Input.GetMouseButtonDown(button);
+            this.button = button;
+        }
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                return !Input.GetMouseButtonDown(button);
+            }
         }
     }
-
 }

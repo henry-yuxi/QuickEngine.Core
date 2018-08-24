@@ -1,86 +1,89 @@
-﻿using System;
-using UnityEngine;
-
-public class WaitForFunc : CustomYieldInstruction
+﻿namespace QuickEngine.Unity
 {
-    private Func<bool> mKeepWaitingFunc;
+    using System;
+    using UnityEngine;
 
-    public WaitForFunc(Func<bool> keepWaitingFunc)
+    public class WaitForFunc : CustomYieldInstruction
     {
-        mKeepWaitingFunc = keepWaitingFunc;
-    }
+        private Func<bool> mKeepWaitingFunc;
 
-    public override bool keepWaiting
-    {
-        get
+        public WaitForFunc(Func<bool> keepWaitingFunc)
         {
-            return mKeepWaitingFunc();
+            mKeepWaitingFunc = keepWaitingFunc;
+        }
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                return mKeepWaitingFunc();
+            }
         }
     }
-}
 
-public class WaitForFunc<T> : CustomYieldInstruction
-{
-    private Func<T, bool> mKeepWaitingFunc;
-    private Func<T> mFunc;
-
-    public WaitForFunc(Func<T, bool> keepWaitingFunc, Func<T> func)
+    public class WaitForFunc<T> : CustomYieldInstruction
     {
-        mKeepWaitingFunc = keepWaitingFunc;
-        mFunc = func;
-    }
+        private Func<T, bool> mKeepWaitingFunc;
+        private Func<T> mFunc;
 
-    public override bool keepWaiting
-    {
-        get
+        public WaitForFunc(Func<T, bool> keepWaitingFunc, Func<T> func)
         {
-            return mKeepWaitingFunc(mFunc());
+            mKeepWaitingFunc = keepWaitingFunc;
+            mFunc = func;
+        }
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                return mKeepWaitingFunc(mFunc());
+            }
         }
     }
-}
 
-public class WaitForFunc<T, U> : CustomYieldInstruction
-{
-    private Func<T, U, bool> mKeepWaitingFunc;
-    private Func<T> mTFunc;
-    private Func<U> mUFunc;
-
-    public WaitForFunc(Func<T, U, bool> keepWaitingFunc, Func<T> tFunc, Func<U> uFunc)
+    public class WaitForFunc<T, U> : CustomYieldInstruction
     {
-        mKeepWaitingFunc = keepWaitingFunc;
-        mTFunc = tFunc;
-        mUFunc = uFunc;
-    }
+        private Func<T, U, bool> mKeepWaitingFunc;
+        private Func<T> mTFunc;
+        private Func<U> mUFunc;
 
-    public override bool keepWaiting
-    {
-        get
+        public WaitForFunc(Func<T, U, bool> keepWaitingFunc, Func<T> tFunc, Func<U> uFunc)
         {
-            return mKeepWaitingFunc(mTFunc(), mUFunc());
+            mKeepWaitingFunc = keepWaitingFunc;
+            mTFunc = tFunc;
+            mUFunc = uFunc;
+        }
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                return mKeepWaitingFunc(mTFunc(), mUFunc());
+            }
         }
     }
-}
 
-public class WaitForFunc<T, U, V> : CustomYieldInstruction
-{
-    private Func<T, U, V, bool> mKeepWaitingFunc;
-    private Func<T> mTFunc;
-    private Func<U> mUFunc;
-    private Func<V> mVFunc;
-
-    public WaitForFunc(Func<T, U, V, bool> keepWaitingFunc, Func<T> tFunc, Func<U> uFunc, Func<V> vFunc)
+    public class WaitForFunc<T, U, V> : CustomYieldInstruction
     {
-        mKeepWaitingFunc = keepWaitingFunc;
-        mTFunc = tFunc;
-        mUFunc = uFunc;
-        mVFunc = vFunc;
-    }
+        private Func<T, U, V, bool> mKeepWaitingFunc;
+        private Func<T> mTFunc;
+        private Func<U> mUFunc;
+        private Func<V> mVFunc;
 
-    public override bool keepWaiting
-    {
-        get
+        public WaitForFunc(Func<T, U, V, bool> keepWaitingFunc, Func<T> tFunc, Func<U> uFunc, Func<V> vFunc)
         {
-            return mKeepWaitingFunc(mTFunc(), mUFunc(), mVFunc());
+            mKeepWaitingFunc = keepWaitingFunc;
+            mTFunc = tFunc;
+            mUFunc = uFunc;
+            mVFunc = vFunc;
+        }
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                return mKeepWaitingFunc(mTFunc(), mUFunc(), mVFunc());
+            }
         }
     }
 }

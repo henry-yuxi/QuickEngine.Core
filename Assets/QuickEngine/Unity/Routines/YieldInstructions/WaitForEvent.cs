@@ -1,42 +1,45 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
-
-public class WaitForEvent : CustomYieldInstruction
+﻿namespace QuickEngine.Unity
 {
-    private bool eventFired;
-    private UnityEvent unityEvent;
+    using UnityEngine;
+    using UnityEngine.Events;
 
-    public WaitForEvent(UnityEvent unityEvent)
+    public class WaitForEvent : CustomYieldInstruction
     {
-        this.unityEvent = unityEvent;
-        unityEvent.AddListener(FireEvent);
-    }
+        private bool eventFired;
+        private UnityEvent unityEvent;
 
-    ~WaitForEvent()
-    {
-        CleanUp();
-    }
-
-    private void FireEvent()
-    {
-        eventFired = true;
-        CleanUp();
-    }
-
-    private void CleanUp()
-    {
-        if (unityEvent != null)
+        public WaitForEvent(UnityEvent unityEvent)
         {
-            unityEvent.RemoveListener(FireEvent);
-            unityEvent = null;
+            this.unityEvent = unityEvent;
+            unityEvent.AddListener(FireEvent);
         }
-    }
 
-    public override bool keepWaiting
-    {
-        get
+        ~WaitForEvent()
         {
-            return !eventFired;
+            CleanUp();
+        }
+
+        private void FireEvent()
+        {
+            eventFired = true;
+            CleanUp();
+        }
+
+        private void CleanUp()
+        {
+            if (unityEvent != null)
+            {
+                unityEvent.RemoveListener(FireEvent);
+                unityEvent = null;
+            }
+        }
+
+        public override bool keepWaiting
+        {
+            get
+            {
+                return !eventFired;
+            }
         }
     }
 }
