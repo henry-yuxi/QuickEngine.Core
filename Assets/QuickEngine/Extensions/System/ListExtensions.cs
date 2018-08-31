@@ -2,72 +2,112 @@
 using System.Collections.Generic;
 using System.Linq;
 
-/* *****************************************************************************
- * File:    ListExtensions.cs
- * Author:  Philip Pierce - Tuesday, September 09, 2014
- * Description:
- *  Extensions for Lists, Arrays, Dictionaries, etc
- *  
- * History:
- *  Tuesday, September 09, 2014 - Created
- * ****************************************************************************/
-
-/// <summary>
-/// Extensions for Lists, Arrays, Dictionaries, etc
-/// </summary>
 public static class ListExtensions
 {
-    #region IsNullOrEmpty
+    public struct GCFreeEnumerator<T>
+    {
+        private List<T>.Enumerator enumerator;
 
-    /// <summary>
-    /// Returns true if the array is null or empty
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="data"></param>
-    /// <returns></returns>
+        public T Current
+        {
+            get { return enumerator.Current; }
+        }
+
+        public GCFreeEnumerator(List<T> collection)
+        {
+            enumerator = collection.GetEnumerator();
+        }
+
+        public GCFreeEnumerator<T> GetEnumerator()
+        {
+            return this;
+        }
+
+        public bool MoveNext()
+        {
+            return enumerator.MoveNext();
+        }
+    }
+
+    public static GCFreeEnumerator<T> ForEachEx<T>(this List<T> collection)
+    {
+        return new GCFreeEnumerator<T>(collection);
+    }
+
+    public static int Count<T>(this List<T> collection, System.Predicate<T> predicate)
+    {
+        if (predicate == null)
+            return 0;
+
+        int count = 0;
+        for (int i = 0; i < collection.Count; i++)
+        {
+            if (predicate(collection[i]))
+                count++;
+        }
+
+        return count;
+    }
+
+    public static bool All<T>(this List<T> collection, System.Predicate<T> predicate)
+    {
+        if (predicate == null)
+            return false;
+
+        for (int i = 0; i < collection.Count; i++)
+        {
+            if (!predicate(collection[i]))
+                return false;
+        }
+
+        return true;
+    }
+
+    public static bool Any<T>(this List<T> collection, System.Predicate<T> predicate)
+    {
+        if (predicate == null)
+            return false;
+
+        for (int i = 0; i < collection.Count; i++)
+        {
+            if (predicate(collection[i]))
+                return true;
+        }
+
+        return false;
+    }
+
+    public static T FirstOrDefault<T>(this List<T> collection)
+    {
+        return collection.Count > 0 ? collection[0] : default(T);
+    }
+
+    public static T FirstOrDefault<T>(this List<T> collection, System.Predicate<T> predicate)
+    {
+        for (var enumerator = collection.GetEnumerator(); enumerator.MoveNext();)
+        {
+            if (predicate(enumerator.Current))
+                return enumerator.Current;
+        }
+
+        return default(T);
+    }
+
     public static bool IsNullOrEmpty<T>(this T[] data)
     {
         return ((data == null) || (data.Length == 0));
     }
 
-    /// <summary>
-    /// Returns true if the list is null or empty
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="data"></param>
-    /// <returns></returns>
     public static bool IsNullOrEmpty<T>(this List<T> data)
     {
         return ((data == null) || (data.Count == 0));
     }
 
-    /// <summary>
-    /// Returns true if the dictionary is null or empty
-    /// </summary>
-    /// <typeparam name="T1"></typeparam>
-    /// <typeparam name="T2"></typeparam>
-    /// <param name="data"></param>
-    /// <returns></returns>
-    public static bool IsNullOrEmpty<T1, T2>(this Dictionary<T1,T2> data)
+    public static bool IsNullOrEmpty<T1, T2>(this Dictionary<T1, T2> data)
     {
         return ((data == null) || (data.Count == 0));
     }
 
-    // IsNullOrEmpty
-    #endregion
-
-    #region RemoveDuplicates
-
-    /// <summary>
-    /// Removes items from a collection based on the condition you provide. This is useful if a query gives 
-    /// you some duplicates that you can't seem to get rid of. Some Linq2Sql queries are an example of this. 
-    /// Use this method afterward to strip things you know are in the list multiple times
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="list"></param>
-    /// <param name="Predicate"></param>
-    /// <remarks>http://extensionmethod.net/csharp/icollection-t/removeduplicates</remarks>
-    /// <returns></returns>
     public static IEnumerable<T> RemoveDuplicates<T>(this ICollection<T> list, Func<T, int> Predicate)
     {
         var dict = new Dictionary<int, T>();
@@ -83,30 +123,16 @@ public static class ListExtensions
         return dict.Values.AsEnumerable();
     }
 
-    // RemoveDuplicates
-    #endregion
-
-    #region DequeueOrNull
-
-    /// <summary>
-    /// deques an item, or returns null
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="q"></param>
-    /// <returns></returns>
     public static T DequeueOrNull<T>(this Queue<T> q)
     {
         try
         {
             return (q.Count > 0) ? q.Dequeue() : default(T);
         }
-
         catch (Exception)
         {
             return default(T);
         }
     }
 
-    // DequeueOrNull
-    #endregion
 }
