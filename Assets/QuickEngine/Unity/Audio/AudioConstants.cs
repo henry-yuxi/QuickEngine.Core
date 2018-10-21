@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class AudioConst
+﻿public class AudioConstants
 {
-
+    public const int MaxAudioCount = 10;
 }
 
 public enum AudioType
@@ -12,9 +8,10 @@ public enum AudioType
     Music,
     Sound,
     Effect,
+    UISound,
 }
 
-public enum AudioEffet
+public enum AudioEffect
 {
     None,//无效果
     FadeIn,//渐入
