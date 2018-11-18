@@ -65,22 +65,6 @@
         public new ConstantForce constantForce { get { return _constantForce ? _constantForce : (_constantForce = GetComponent<ConstantForce>()); } }
 
         [HideInInspector, NonSerialized]
-        private GUIText _guiText;
-
-        /// <summary>
-        /// Gets the GUIText attached to the object.
-        /// </summary>
-        public new GUIText guiText { get { return _guiText ? _guiText : (_guiText = GetComponent<GUIText>()); } }
-
-        [HideInInspector, NonSerialized]
-        private GUITexture _guiTexture;
-
-        /// <summary>
-        /// Gets the GUITexture attached to the object.
-        /// </summary>
-        public new GUITexture guiTexture { get { return _guiTexture ? _guiTexture : (_guiTexture = GetComponent<GUITexture>()); } }
-
-        [HideInInspector, NonSerialized]
         private HingeJoint _hingeJoint;
 
         /// <summary>
@@ -95,14 +79,6 @@
         /// Gets the Light attached to the object.
         /// </summary>
         public new Light light { get { return _light ? _light : (_light = GetComponent<Light>()); } }
-
-        [HideInInspector, NonSerialized]
-        private NetworkView _networkView;
-
-        /// <summary>
-        /// Gets the NetworkView attached to the object.
-        /// </summary>
-        public new NetworkView networkView { get { return _networkView ? _networkView : (_networkView = GetComponent<NetworkView>()); } }
 
         [HideInInspector, NonSerialized]
         private ParticleSystem _particleSystem;
