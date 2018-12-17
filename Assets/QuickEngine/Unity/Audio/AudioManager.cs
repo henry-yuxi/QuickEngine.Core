@@ -6,8 +6,8 @@ public class AudioManager : MonoBehaviour
     {
     }
 
-    private void OnLevelWasLoaded(int level)
-    { }
+    //private void OnLevelWasLoaded(int level)
+    //{ }
 
     //    //    PlayMusic(AudioClip clip)
     //    //PauseMusic()

@@ -1,7 +1,9 @@
 ﻿namespace QuickEngine.Unity
 {
+    using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.Events;
 
     public static class Yielders
     {
@@ -23,7 +25,7 @@
             get { mInternalCounter++; return Enabled ? mWaitForFixedUpdate : new WaitForFixedUpdate(); }
         }
 
-        public static WaitForSeconds GetWaitForSeconds(float seconds)
+        public static WaitForSeconds Seconds(float seconds)
         {
             mInternalCounter++;
 
@@ -36,7 +38,16 @@
             return wfs;
         }
 
-        public static void ClearWaitForSeconds()
+        public static IEnumerator Seconds(float seconds, UnityAction action)
+        {
+            yield return Seconds(seconds);
+            if (action != null)
+            {
+                action();
+            }
+        }
+
+        public static void CleanUpSecondsCache()
         {
             mWaitForSecondsYielders.Clear();
         }

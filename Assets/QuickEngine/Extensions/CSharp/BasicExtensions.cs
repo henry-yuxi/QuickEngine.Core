@@ -9,6 +9,7 @@
 
     public static class BasicExtensions
     {
+
         #region Bool Extensions
 
         public static bool IsTrue(this bool item)

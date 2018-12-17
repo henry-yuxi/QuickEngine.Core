@@ -50,7 +50,7 @@ public class QRoutineTest : MonoBehaviour
     private IEnumerator RoutineMethod1()
     {
         Debug.Log("Routine Method 1");
-        yield return Yielders.GetWaitForSeconds(0.1f);
+        yield return Yielders.Seconds(0.1f);
         yield return null;
     }
 

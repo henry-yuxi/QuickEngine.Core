@@ -34,8 +34,6 @@
 
         #region Color Extensions
 
-        private static Color mColor = new Color();
-
         public static Color FromRGB(int r, int g, int b)
         {
             return new Color(r / 255f, g / 255f, b / 255f);

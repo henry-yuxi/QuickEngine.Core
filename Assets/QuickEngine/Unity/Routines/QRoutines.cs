@@ -255,7 +255,7 @@
 
         public QRoutines WaitForSeconds(float seconds)
         {
-            return WaitForYieldInstruction(Yielders.GetWaitForSeconds(seconds));
+            return WaitForYieldInstruction(Yielders.Seconds(seconds));
         }
 
         public QRoutines WaitForSecondsRealtime(float seconds)
