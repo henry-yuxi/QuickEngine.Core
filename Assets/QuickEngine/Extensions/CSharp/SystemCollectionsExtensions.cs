@@ -5,34 +5,31 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
 
-    public static class CollectionsExtensions
+    public static class SystemCollectionsExtensions
     {
         /// <summary>
-        /// 对象拷贝
+        /// Enum没有实现IEquatable接口。因此，当我们使用Enum类型作为key值时，Dictionary的内部操作就需要将Enum类型转换为System.Object，这就导致了Boxing的产生。
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        public static T DeepClone<T>(this T item)
+        public struct KeyEnumComparer<T> : IEqualityComparer<T> where T : struct
         {
-            if (!typeof(T).IsSerializable)
+            public bool Equals(T first, T second)
             {
-                throw new ArgumentException("The type must be serializable. ", item.ToString());
+                var firstParam = Expression.Parameter(typeof(T), "first");
+                var secondParam = Expression.Parameter(typeof(T), "second");
+                var equalExpression = Expression.Equal(firstParam, secondParam);
+                return Expression.Lambda<Func<T, T, bool>>(equalExpression, new[] { firstParam, secondParam }).Compile().Invoke(first, second);
             }
-            if (Object.ReferenceEquals(item, null))
+
+            public int GetHashCode(T instance)
             {
-                return default(T);
-            }
-            using (Stream stream = new MemoryStream())
-            {
-                //利用 System.Runtime.Serialization序列化与反序列化完成引用对象的复制
-                IFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(stream, item);
-                stream.Seek(0, SeekOrigin.Begin);
-                return (T)formatter.Deserialize(stream);
+                var parameter = Expression.Parameter(typeof(T), "instance");
+                var convertExpression = Expression.Convert(parameter, typeof(int));
+                return Expression.Lambda<Func<T, int>>(convertExpression, new[] { parameter }).Compile().Invoke(instance);
             }
         }
 
@@ -66,6 +63,32 @@
         public static bool IsBetweenExclusive<T>(this T actual, T lower, T upper) where T : IComparable<T>
         {
             return actual.CompareTo(lower) >= 0 && actual.CompareTo(upper) < 0;
+        }
+
+        /// <summary>
+        /// 对象拷贝
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public static T DeepClone<T>(this T item)
+        {
+            if (!typeof(T).IsSerializable)
+            {
+                throw new ArgumentException("The type must be serializable. ", item.ToString());
+            }
+            if (Object.ReferenceEquals(item, null))
+            {
+                return default(T);
+            }
+            using (Stream stream = new MemoryStream())
+            {
+                //利用 System.Runtime.Serialization序列化与反序列化完成引用对象的复制
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, item);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (T)formatter.Deserialize(stream);
+            }
         }
 
         #endregion T Extensions

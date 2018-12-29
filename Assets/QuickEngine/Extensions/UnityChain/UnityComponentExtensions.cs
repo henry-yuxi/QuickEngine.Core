@@ -78,7 +78,7 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="com"></param>
         /// <returns></returns>
-        public static T RequireComponent<T>(this Component com) where T : Component
+        public static T EnsureComponent<T>(this Component com) where T : Component
         {
             T comp = com.GetComponent<T>();
             if (comp == null)
@@ -95,7 +95,7 @@
         /// <param name="com"></param>
         /// <param name="isAddNewComp">是不是新增的组件</param>
         /// <returns></returns>
-        public static T RequireComponent<T>(this Component com, ref bool isAddNewComp) where T : Component
+        public static T EnsureComponent<T>(this Component com, ref bool isAddNewComp) where T : Component
         {
             T comp = com.GetComponent<T>();
             if (isAddNewComp = (comp == null))
