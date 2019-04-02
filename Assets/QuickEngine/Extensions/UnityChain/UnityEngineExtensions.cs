@@ -32,6 +32,31 @@
 
         #endregion AudioClip Extensions
 
+        #region AudioSource Extensions
+
+        public static AudioSource SetClipAndPlay(this AudioSource audioSource, AudioClip clip)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+            return audioSource;
+        }
+
+        //设置音量
+        public static AudioSource SetVolume(this AudioSource audioSource, float Volume)
+        {
+            audioSource.volume = Volume;
+            return audioSource;
+        }
+
+        //设置循环播放
+        public static AudioSource SetLoop(this AudioSource audioSource, bool isLoop)
+        {
+            audioSource.loop = isLoop;
+            return audioSource;
+        }
+
+        #endregion AudioSource Extensions
+
         #region Color Extensions
 
         public static Color FromRGB(int r, int g, int b)
