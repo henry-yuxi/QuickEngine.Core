@@ -567,7 +567,7 @@
 
         #region UnityAction Extensions
 
-        public static bool InvokeGracefully(this UnityAction action)
+        public static bool TryInvoke(this UnityAction action)
         {
             if (null != action)
             {
@@ -577,7 +577,7 @@
             return false;
         }
 
-        public static bool InvokeGracefully<T1>(this UnityAction<T1> action, T1 arg1)
+        public static bool TryInvoke<T1>(this UnityAction<T1> action, T1 arg1)
         {
             if (null != action)
             {
@@ -587,7 +587,7 @@
             return false;
         }
 
-        public static bool InvokeGracefully<T1, T2>(this UnityAction<T1, T2> action, T1 arg1, T2 arg2)
+        public static bool TryInvoke<T1, T2>(this UnityAction<T1, T2> action, T1 arg1, T2 arg2)
         {
             if (null != action)
             {
@@ -597,7 +597,7 @@
             return false;
         }
 
-        public static bool InvokeGracefully<T1, T2, T3>(this UnityAction<T1, T2, T3> action, T1 arg1, T2 arg2, T3 arg3)
+        public static bool TryInvoke<T1, T2, T3>(this UnityAction<T1, T2, T3> action, T1 arg1, T2 arg2, T3 arg3)
         {
             if (null != action)
             {
@@ -607,7 +607,7 @@
             return false;
         }
 
-        public static bool InvokeGracefully<T1, T2, T3, T4>(this UnityAction<T1, T2, T3, T4> action, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+        public static bool TryInvoke<T1, T2, T3, T4>(this UnityAction<T1, T2, T3, T4> action, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
         {
             if (null != action)
             {
