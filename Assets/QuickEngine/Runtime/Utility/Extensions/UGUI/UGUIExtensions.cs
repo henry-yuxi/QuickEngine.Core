@@ -4,7 +4,7 @@
     using UnityEngine;
     using UnityEngine.UI;
 
-    public static class UGUIExtensions
+    public static partial class UGUIExtensions
     {
         public static void SetText(this Text text, object t)
         {

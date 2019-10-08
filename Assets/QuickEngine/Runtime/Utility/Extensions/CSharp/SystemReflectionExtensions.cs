@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Reflection;
 
-    public static class SystemReflectionExtensions
+    public static partial class CSharpExtensions
     {
         public static T InvokeConstructor<T>(this Type type, Type[] paramTypes = null, object[] paramValues = null)
         {

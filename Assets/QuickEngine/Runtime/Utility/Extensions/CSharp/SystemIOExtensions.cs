@@ -2,7 +2,7 @@
 {
     using System.IO;
 
-    public static class SystemIOExtensions
+    public static partial class CSharpExtensions
     {
         #region MemoryStream Extensions
 

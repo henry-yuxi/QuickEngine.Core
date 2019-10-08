@@ -4,7 +4,7 @@ namespace QuickEngine.Extensions
     using UnityEngine;
     using System.Collections.Generic;
 
-    public static class NGUIExtensions
+    public static partial class NGUIExtensions
     {
 #region UIEventListener Extensions
 

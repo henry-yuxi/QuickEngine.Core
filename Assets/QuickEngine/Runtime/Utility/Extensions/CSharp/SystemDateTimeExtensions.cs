@@ -61,7 +61,7 @@
         public static readonly string[] WeekDescribes = new string[] { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
     }
 
-    public static class DateTimeExtensions
+    public static partial class CSharpExtensions
     {
         private static readonly DateTime StartTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Local);
 

@@ -9,7 +9,7 @@
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
 
-    public static class SystemCollectionsExtensions
+    public static partial class CSharpExtensions
     {
         /// <summary>
         /// Enum没有实现IEquatable接口。因此，当我们使用Enum类型作为key值时，Dictionary的内部操作就需要将Enum类型转换为System.Object，这就导致了Boxing的产生。

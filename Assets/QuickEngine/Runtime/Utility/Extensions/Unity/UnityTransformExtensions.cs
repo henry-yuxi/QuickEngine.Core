@@ -3,7 +3,7 @@
     using System;
     using UnityEngine;
 
-    public static class UnityTransformExtensions
+    public static partial class UnityEngineExtensions
     {
         #region TransformChain
 

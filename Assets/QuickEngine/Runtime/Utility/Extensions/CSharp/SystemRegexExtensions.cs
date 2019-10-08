@@ -4,7 +4,7 @@
     using System.Globalization;
     using System.Text.RegularExpressions;
 
-    public static class SystemRegexExtensions
+    public static partial class CSharpExtensions
     {
         public static bool IsValidEmail(this string email)
         {

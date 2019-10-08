@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    public static class UnityRotateExtensions
+    public static partial class UnityEngineExtensions
     {
         #region Rotate_DegreesPerSecond
 

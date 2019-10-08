@@ -2,7 +2,7 @@
 {
     using System;
 
-    public static class SystemExtensions
+    public static partial class CSharpExtensions
     {
         #region Action Extensions
 

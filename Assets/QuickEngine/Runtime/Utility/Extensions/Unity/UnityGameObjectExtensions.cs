@@ -4,7 +4,7 @@
     using System.Linq;
     using UnityEngine;
 
-    public static class UnityGameObjectExtensions
+    public static partial class UnityEngineExtensions
     {
         #region GameObjectChain
 
@@ -29,56 +29,6 @@
         #endregion GameObjectChain
 
         #region GameObject Extensions
-
-        static public void Destroy(UnityEngine.Object obj)
-        {
-            if (obj)
-            {
-                if (obj is Transform)
-                {
-                    Transform t = (obj as Transform);
-                    GameObject go = t.gameObject;
-
-                    if (Application.isPlaying)
-                    {
-                        t.parent = null;
-                        UnityEngine.Object.Destroy(go);
-                    }
-                    else UnityEngine.Object.DestroyImmediate(go);
-                }
-                else if (obj is GameObject)
-                {
-                    GameObject go = obj as GameObject;
-                    Transform t = go.transform;
-
-                    if (Application.isPlaying)
-                    {
-                        t.parent = null;
-                        UnityEngine.Object.Destroy(go);
-                    }
-                    else UnityEngine.Object.DestroyImmediate(go);
-                }
-                else if (Application.isPlaying) UnityEngine.Object.Destroy(obj);
-                else UnityEngine.Object.DestroyImmediate(obj);
-            }
-        }
-
-        static public void DestroyChildren(this Component comp)
-        {
-            bool isPlaying = Application.isPlaying;
-
-            while (comp.transform.childCount != 0)
-            {
-                Transform child = comp.transform.GetChild(0);
-
-                if (isPlaying)
-                {
-                    child.parent = null;
-                    UnityEngine.Object.Destroy(child.gameObject);
-                }
-                else UnityEngine.Object.DestroyImmediate(child.gameObject);
-            }
-        }
 
         public static bool IsNullOrInactive(this GameObject go)
         {
@@ -195,23 +145,6 @@
         public static bool ContainsLayer(this LayerMask mask, int layer)
         {
             return (mask.value & (1 << layer)) != 0;
-        }
-
-        public static bool IsInLayerMask(this GameObject gameObject, LayerMask mask)
-        {
-            return ((mask.value & (1 << gameObject.layer)) > 0);
-        }
-
-        public static bool HasComponent<T>(this GameObject go, bool checkChildren) where T : Component
-        {
-            if (!checkChildren)
-            {
-                return go.GetComponent<T>();
-            }
-            else
-            {
-                return go.GetComponentsInChildren<T>().FirstOrDefault() != null;
-            }
         }
 
         /// <summary>

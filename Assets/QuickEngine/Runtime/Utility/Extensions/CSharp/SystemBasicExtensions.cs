@@ -7,7 +7,7 @@
     using System.Reflection;
     using System.Text;
 
-    public static class SystemBasicExtensions
+    public static partial class CSharpExtensions
     {
 
         #region Bool Extensions
